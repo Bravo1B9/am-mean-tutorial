@@ -8,14 +8,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Jan 1st</td>
-      <td>Entry 1</td>
-      <td>No action</td>
-    </tr>
-    <tr>
-      <td>Jan 2nd</td>
-      <td>Hello World</td>
+    <tr *ngFor="let diaryEntry of diaryEntries">
+      <td>{{ diaryEntry.date }}</td>
+      <td>{{ diaryEntry.entry }}</td>
       <td>No action</td>
     </tr>
   </tbody>
