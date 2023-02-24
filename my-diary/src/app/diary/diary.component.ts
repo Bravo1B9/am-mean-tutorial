@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DiaryDataService } from '../shared/diary-data.component';
 import { DiaryEntry } from '../shared/diary-entry.model';
@@ -13,7 +14,7 @@ export class DiaryComponent implements OnInit, OnDestroy {
   diaryEntries!: DiaryEntry[];
   diarySubscription = new Subscription();
   
-  constructor(private diaryDataService: DiaryDataService) {}
+  constructor(private diaryDataService: DiaryDataService, private router: Router) {}
 
   ngOnInit(): void {
     this.diarySubscription = this.diaryDataService.diarySubject.subscribe(diaryEntries => {
@@ -24,6 +25,10 @@ export class DiaryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.diarySubscription.unsubscribe();
+  }
+
+  onEdit(index: number) {
+    this.router.navigate(["edit", index]);
   }
 
   onDelete(index: number) {

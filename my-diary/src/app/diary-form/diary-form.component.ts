@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DiaryDataService } from '../shared/diary-data.component';
 import { DiaryEntry } from '../shared/diary-entry.model';
 
@@ -10,17 +10,32 @@ import { DiaryEntry } from '../shared/diary-entry.model';
   styleUrls: ['./diary-form.component.css'],
 })
 export class DiaryFormComponent implements OnInit {
+
   diaryForm!: FormGroup;
+  editMode: boolean = false;
+  diaryEntry!: DiaryEntry;
+  paramId!: number;
 
   constructor(
     private diaryDataService: DiaryDataService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      if(paramMap.has('id')) {
+        this.editMode = true;
+        this.paramId = + paramMap.get('id')!;
+        this.diaryEntry = this.diaryDataService.getDiaryEntry(this.paramId);
+      }
+      else {
+        this.editMode = false;
+      }
+    });
     this.diaryForm = new FormGroup({
-      date: new FormControl(null, [Validators.required]),
-      entry: new FormControl(null, [Validators.required]),
+      "date": new FormControl(this.editMode ? this.diaryEntry.date : null, [Validators.required]),
+      "entry": new FormControl(this.editMode ? this.diaryEntry.entry : null, [Validators.required]),
     });
   }
 

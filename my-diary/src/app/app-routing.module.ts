@@ -5,7 +5,8 @@ import { DiaryComponent } from './diary/diary.component';
 
 const routes: Routes = [
   { path: "", component: DiaryComponent },
-  { path: "data-entry", component: DiaryFormComponent }
+  { path: "data-entry", component: DiaryFormComponent },
+  { path: "edit/:id", component: DiaryFormComponent }
 ];
 
 @NgModule({
