@@ -17,5 +17,10 @@ export class DiaryDataService {
     this.diaryEntries.splice(index, 1);
     this.diarySubject.next(this.diaryEntries);
   }
+
+  onAddDiaryEntry(dairyEntry: DiaryEntry) {
+    this.diaryEntries.push(dairyEntry);
+    this.diarySubject.next(this.diaryEntries);
+  }
   
 }
