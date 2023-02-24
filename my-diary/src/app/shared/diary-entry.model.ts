@@ -1,5 +1,5 @@
 export class DiaryEntry{
 
-  public constructor(public date: string, public entry: string){}
+  public constructor(public id: number,  public date: string, public entry: string){}
 
 }
