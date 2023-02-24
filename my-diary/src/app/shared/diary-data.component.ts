@@ -17,14 +17,22 @@ export class DiaryDataService {
   }
 
   onAddDiaryEntry(dairyEntry: DiaryEntry) {
+    this.http
+      .post<{ message: string }>(
+        'https://3000-bravo1b9-ammeantutorial-cyxbsbperhf.ws-eu88.gitpod.io/add-entry',
+        dairyEntry
+      )
+      .subscribe((jsonData) => {
+        this.getDiaryEntries()
+      });
     this.diaryEntries.push(dairyEntry);
     this.diarySubject.next(this.diaryEntries);
   }
 
   getDiaryEntries() {
     this.http
-      .get<{diaryEntries: DiaryEntry[]}>(
-        'https://3000-bravo1b9-ammeantutorial-cyxbsbperhf.ws-eu87.gitpod.io/diary-entries'
+      .get<{ diaryEntries: DiaryEntry[] }>(
+        'https://3000-bravo1b9-ammeantutorial-cyxbsbperhf.ws-eu88.gitpod.io/diary-entries'
       )
       .subscribe((jsonData) => {
         this.diaryEntries = jsonData.diaryEntries;
